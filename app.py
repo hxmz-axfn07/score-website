@@ -22,7 +22,7 @@ def home():
 def get_scores():
     """Return all scores in descending order."""
     scores = Score.query.order_by(Score.score.desc()).all()
-    return jsonify([{"name": s.name, "score": s.score} for s in scores])
+    return jsonify({s.name.lower(): s.score for s in scores})
 
 @app.route("/api/submit", methods=["POST"])
 def submit_score():
@@ -32,6 +32,31 @@ def submit_score():
     db.session.add(new_score)
     db.session.commit()
     return jsonify({"message": "Score saved"}), 201
+
+@app.route("/api/update", methods=["POST"])
+def update_score():
+    """Update existing score"""
+    data = request.get_json()
+    name = data.get("person")
+    change = int(data.get("change", 0))
+
+    if not name:
+        return jsonify({"error": "Name is required"}), 400
+
+    score = Score.query.filter_by(name=name).first()
+
+    if not score:
+        # If not found, create a new one
+        score = Score(name=name, score=change)
+        db.session.add(score)
+    else:
+        score.score += change
+
+    db.session.commit()
+
+    # Return updated scores
+    scores = Score.query.order_by(Score.score.desc()).all()
+    return jsonify({s.name.lower(): s.score for s in scores})
 
 if __name__ == "__main__":
     app.run()
