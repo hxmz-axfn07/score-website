@@ -180,38 +180,47 @@
 <body>
     <div class="status-indicator status-online" id="status">â Online</div>
     
-    <div class="main-container">
-        <h1>RESPECT SCORE</h1>
-        <div class="cards-container">
-            <div class="person-card">
-                <div class="person-name">Ali</div>
-                <div class="person-image">ð¤</div>
-                <div class="score-container">
-                    <button class="score-btn minus-btn" onclick="updateScore('ali', -1)">-1</button>
-                    <div class="score-display" id="ali-score">0</div>
-                    <button class="score-btn plus-btn" onclick="updateScore('ali', 1)">+1</button>
+        <div class="main-container">
+            <h1>RESPECT SCORE</h1>
+            <div class="cards-container">
+                <div class="person-card">
+                    <div class="person-name">Ali</div>
+                    <div class="person-image">
+                      <img src="assets/images/ali.jpg" alt="Ali" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;" />
+                    </div>
+                    <div class="score-container">
+                        <button class="score-btn minus-btn" onclick="updateScore('ali', -1)">-1</button>
+                        <div class="score-display" id="ali-score">0</div>
+                        <button class="score-btn plus-btn" onclick="updateScore('ali', 1)">+1</button>
+                    </div>
                 </div>
-            </div>
-            <div class="person-card">
-                <div class="person-name">Hamza</div>
-                <div class="person-image">ð¤</div>
-                <div class="score-container">
-                    <button class="score-btn minus-btn" onclick="updateScore('hamza', -1)">-1</button>
-                    <div class="score-display" id="hamza-score">0</div>
-                    <button class="score-btn plus-btn" onclick="updateScore('hamza', 1)">+1</button>
+        
+                <div class="person-card">
+                    <div class="person-name">Hamza</div>
+                    <div class="person-image">
+                      <img src="assets/images/ali.jpg" alt="Ali" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;" />
+                    </div>
+                    <div class="score-container">
+                        <button class="score-btn minus-btn" onclick="updateScore('hamza', -1)">-1</button>
+                        <div class="score-display" id="hamza-score">0</div>
+                        <button class="score-btn plus-btn" onclick="updateScore('hamza', 1)">+1</button>
+                    </div>
                 </div>
-            </div>
-            <div class="person-card">
-                <div class="person-name">Yasir</div>
-                <div class="person-image">ð¤</div>
-                <div class="score-container">
-                    <button class="score-btn minus-btn" onclick="updateScore('yasir', -1)">-1</button>
-                    <div class="score-display" id="yasir-score">0</div>
-                    <button class="score-btn plus-btn" onclick="updateScore('yasir', 1)">+1</button>
+        
+                <div class="person-card">
+                    <div class="person-name">Yasir</div>
+                    <div class="person-image">
+                      <img src="assets/images/ali.jpg" alt="Ali" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;" />
+                    </div>
+                    <div class="score-container">
+                        <button class="score-btn minus-btn" onclick="updateScore('yasir', -1)">-1</button>
+                        <div class="score-display" id="yasir-score">0</div>
+                        <button class="score-btn plus-btn" onclick="updateScore('yasir', 1)">+1</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+        
 
     <script>
         let scores = {};
@@ -233,13 +242,13 @@
                 if (response.ok) {
                     scores = await response.json();
                     updateScoreDisplays();
-                    setStatus('online', 'â Online');
+                    setStatus('online', '✅ Online');
                 } else {
                     throw new Error('Failed to load scores');
                 }
             } catch (error) {
                 console.error('Error loading scores:', error);
-                setStatus('error', 'â Error');
+                setStatus('error', '❌ Error');
             }
         }
 
@@ -261,7 +270,8 @@
             if (isUpdating) return; // Prevent multiple simultaneous updates
             
             isUpdating = true;
-            setStatus('updating', 'â Updating...');
+            setStatus('updating', '⏳ Updating...');
+
             
             // Disable all buttons
             const buttons = document.querySelectorAll('.score-btn');
