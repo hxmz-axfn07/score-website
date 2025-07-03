@@ -320,7 +320,7 @@
  -->
 
 
-"""<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -553,10 +553,13 @@
 
         // Load initial scores
         async function loadScores() {
+            console.log("Loading scores...");
             try {
                 const response = await fetch('/api/scores');
+                const data = await response.json();
+                console.log("Fetched scores:", data);  // ✅ log here
                 if (response.ok) {
-                    scores = await response.json();
+                    scores = data;
                     updateScoreDisplays();
                     setStatus('online', '● Online');
                 } else {
@@ -567,20 +570,25 @@
                 setStatus('error', '● Error');
             }
         }
+        
 
         // Update score displays
         function updateScoreDisplays() {
+            console.log("Updating score display...");
             for (const person in scores) {
+                console.log(`Setting ${person}-score to: ${scores[person]}`);  // ✅ log here
                 const el = document.getElementById(`${person}-score`);
                 if (el) {
                     el.textContent = scores[person];
-                    // Add animation
                     el.classList.add('updating');
                     setTimeout(() => el.classList.remove('updating'), 300);
+                } else {
+                    console.warn(`Element with ID ${person}-score not found`);
                 }
             }
         }
-
+        
+        
         // Update score function
         async function updateScore(person, change) {
             if (isUpdating) return; // Prevent multiple simultaneous updates
